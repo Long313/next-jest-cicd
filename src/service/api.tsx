@@ -1,7 +1,6 @@
 import api from "../utils/api";
 
 export const registerUser = (url: string, params: any) => {
-  console.log("params", params);
   return api({
     headers: {
       // Authorization: `Bearer ${token}`,
@@ -17,6 +16,7 @@ export const registerUser = (url: string, params: any) => {
   });
 };
 export const loginUser = (url: string, params: any) => {
+  console.log("params", params);
   return api({
     headers: {
       // Authorization: `Bearer ${token}`,
@@ -26,7 +26,7 @@ export const loginUser = (url: string, params: any) => {
     },
     method: "POST",
     url: `/${url}`,
-    params: {
+    data: {
       ...params,
     },
   });

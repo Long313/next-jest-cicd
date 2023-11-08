@@ -4,51 +4,19 @@ import cat from "../../../../public/cat.jpg";
 import { useState, useEffect } from "react";
 
 interface TypeTextError {
-  userName: string;
-  password: string;
-  repeatPassword: string;
   email: string;
-  language: string;
+  password: string;
   [key: string]: any;
 }
 
 export default function FormLogin(props: any) {
-  const [userName, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [repeatPassword, setRepeatPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [language, setLanguage] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [textError, setTextError] = useState<TypeTextError>({
-    userName: "",
-    password: "",
-    repeatPassword: "",
     email: "",
-    language: "",
+    password: "",
   });
   const [status, setStatus] = useState(true);
-
-  const handleGetUserName = (e: any) => {
-    setTextError({
-      ...textError,
-      userName: "",
-    });
-    setUserName(e.target.value);
-  };
-  const handleCheckUserName = () => {
-    let userNameRegex = /^[a-zA-Z0-9]{4,8}$/;
-    if (userNameRegex.test(userName)) {
-      setTextError({
-        ...textError,
-        userName: "",
-      });
-    } else {
-      setTextError({
-        ...textError,
-        userName:
-          "Username is 4 to 8 characters consisting of letters or numbers. And no special characters",
-      });
-    }
-  };
 
   const handleGetPassword = (e: any) => {
     setTextError({
@@ -74,41 +42,12 @@ export default function FormLogin(props: any) {
     }
   };
 
-  const handleGetRepeatPassword = (e: any) => {
-    setTextError({
-      ...textError,
-      repeatPassword: "",
-    });
-    setRepeatPassword(e.target.value);
-  };
-
-  const handleCheckRepeatPassword = () => {
-    if (password === repeatPassword && passwordRegex.test(repeatPassword)) {
-      setTextError({
-        ...textError,
-        repeatPassword: "",
-      });
-    }
-    if (!passwordRegex.test(repeatPassword)) {
-      setTextError({
-        ...textError,
-        repeatPassword:
-          "Password must contain 6 to 10 characters including one uppercase character and one special character",
-      });
-    }
-    if (password !== repeatPassword && passwordRegex.test(repeatPassword)) {
-      setTextError({
-        ...textError,
-        repeatPassword: "The repeat password must be the same as the password",
-      });
-    }
-  };
-
   const handleGetEmail = (e: any) => {
     setTextError({
       ...textError,
       email: "",
     });
+    console.log("event", email);
     setEmail(e.target.value);
   };
 
@@ -127,27 +66,6 @@ export default function FormLogin(props: any) {
     }
   };
 
-  const handleGetLanguage = (e: any) => {
-    setTextError({
-      ...textError,
-      language: "",
-    });
-    setLanguage(e.target.value);
-  };
-
-  const handleCheckLanguage = () => {
-    if (language) {
-      setTextError({
-        ...textError,
-        language: "",
-      });
-    } else {
-      setTextError({
-        ...textError,
-        language: "Please choose a language",
-      });
-    }
-  };
   const checkFormValid = () => {
     for (let key in textError) {
       const value = textError[key];
@@ -162,18 +80,15 @@ export default function FormLogin(props: any) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     submit({
-      userName,
-      password,
-      repeatPassword,
       email,
-      language,
+      password,
     });
   };
   useEffect(() => {
-    if (userName && password && repeatPassword && email && language) {
+    if (email && password) {
       checkFormValid();
     }
-  }, [userName, password, repeatPassword, email, language]);
+  }, [email, password]);
   const { submit } = props;
   return (
     <form
