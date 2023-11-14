@@ -15,7 +15,7 @@ export const registerUser = (url: string, params: any) => {
     },
   });
 };
-export const loginUser = (url: string, params: any) => {
+export const login = (url: string, params: any) => {
   console.log("params", params);
   return api({
     headers: {

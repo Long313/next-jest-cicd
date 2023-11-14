@@ -13,7 +13,7 @@ interface TypeData {
 export default function SignUp() {
   const router = useRouter();
   const handleRegister = async (data: TypeData) => {
-    // console.log("form data", data);
+    console.log("form data", data);
     const { repeatPassword, ...params } = data;
     const res = await registerUser(REGISTER_API, params);
     // console.log("Res", res);

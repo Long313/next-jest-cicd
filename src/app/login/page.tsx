@@ -2,24 +2,16 @@
 
 import FormLogin from "@/components/Form/FormLogin";
 import { LOGIN_API } from "@/constant";
-import { loginUser } from "@/service/api";
+import { loginUser } from "@/redux/apiRequest";
 import { useRouter } from "next/navigation";
+import { useDispatch } from 'react-redux';
 
 export default function SignIn() {
   const router = useRouter();
-  
-
+  const dispatch = useDispatch();
   const handleLogin = async (data: any) => {
     console.log("login", data);
-    const res = await loginUser(LOGIN_API, data);
-    console.log("res123", res);
-    try {
-      if (res.status === 201) {
-        router.push("/");
-      }
-    } catch (err: any) {
-      throw new err();
-    }
+    loginUser(data,dispatch,router)
   };
   return (
     <main className="flex justify-center items-center w-full h-full">

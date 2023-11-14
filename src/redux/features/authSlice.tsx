@@ -1,33 +1,31 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-
-type AuthState = {
-  isLoading: boolean;
-  email: string;
-  isError: boolean;
-};
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoading: false,
-  email: "",
-  isError: false,
-} as AuthState;
+  login: {
+    currentUser: null,
+    isFetching: false,
+    error: false
+  }
+};
 
-export const auth = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logOut: () => {
-      return initialState;
-    },
-    logIn: (state, action: PayloadAction<string>) => {
-      return {
-        isLoading: true,
-        email: action.payload,
-        isError: true,
-      };
-    },
+      loginStart: (state) => {
+        state.login.isFetching = true;
+      },
+      loginSuccess: (state, action) => {
+        state.login.isFetching = false;
+        state.login.currentUser = action.payload;
+        state.login.error = false;
+      },
+      loginFailed: (state) => {
+        state.login.isFetching = false;
+        state.login.error = true;
+      }
   },
 });
 
-export const { logIn, logOut } = auth.actions;
-export default auth.reducer;
+export const { loginStart, loginSuccess, loginFailed } = authSlice.actions;
+export default authSlice.reducer;
